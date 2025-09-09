@@ -71,6 +71,10 @@ class ModificationForm(QWidget):
         self.document_data = document_data
         self.clear_content()
         
+        # Add RTF warning if applicable
+        if document_data.get('file_type') == 'rtf':
+            self.add_rtf_warning()
+        
         # Page settings group
         self.add_page_settings_group()
         
@@ -86,31 +90,67 @@ class ModificationForm(QWidget):
         # Enable apply button
         self.apply_button.setEnabled(True)
         
+    def add_rtf_warning(self):
+        """Add warning for RTF files about limitations"""
+        warning_group = QGroupBox("⚠️ RTF File Notice")
+        layout = QVBoxLayout(warning_group)
+        
+        warning_text = QLabel(
+            "<b>RTF Format Limitations:</b><br/>"
+            "• Page size changes are not supported for RTF files<br/>"
+            "• Only margin modifications will be applied (if not already present)<br/>"
+            "• Original document formatting and text content are fully preserved<br/>"
+            "• RTF formatting codes (like \\f0, \\fs28) are normal and not text content"
+        )
+        warning_text.setObjectName("measurementUnit")
+        warning_text.setWordWrap(True)
+        layout.addWidget(warning_text)
+        
+        self.form_layout.addWidget(warning_group)
+        
     def add_page_settings_group(self):
         """Add page size settings group"""
-        group = QGroupBox("Page Size")
+        group = QGroupBox("📏 Page Size")
         layout = QFormLayout(group)
+        layout.setSpacing(8)
+        
+        # Check if RTF file
+        is_rtf = self.document_data and self.document_data.get('file_type') == 'rtf'
         
         # Page size dropdown
         self.page_size_combo = QComboBox()
         self.page_size_combo.addItems(["A4", "Letter", "Legal", "Custom"])
         self.page_size_combo.currentTextChanged.connect(self.on_page_size_changed)
+        self.page_size_combo.setEnabled(not is_rtf)
         layout.addRow("Size:", self.page_size_combo)
         
         # Custom dimensions (initially hidden)
         self.custom_width = QDoubleSpinBox()
         self.custom_width.setRange(1.0, 20.0)
         self.custom_width.setValue(8.5)
-        self.custom_width.setSuffix(" in")
+        self.custom_width.setSuffix(" inches")
+        self.custom_width.setDecimals(2)
+        self.custom_width.setEnabled(not is_rtf)
         self.custom_width.hide()
         layout.addRow("Width:", self.custom_width)
         
         self.custom_height = QDoubleSpinBox()
         self.custom_height.setRange(1.0, 30.0)
         self.custom_height.setValue(11.0)
-        self.custom_height.setSuffix(" in")
+        self.custom_height.setSuffix(" inches")
+        self.custom_height.setDecimals(2)
+        self.custom_height.setEnabled(not is_rtf)
         self.custom_height.hide()
         layout.addRow("Height:", self.custom_height)
+        
+        # Add unit info label
+        if is_rtf:
+            unit_info = QLabel("Page size changes not supported for RTF files")
+            unit_info.setObjectName("measurementUnit")
+        else:
+            unit_info = QLabel("All measurements are in inches")
+            unit_info.setObjectName("measurementUnit")
+        layout.addRow("", unit_info)
         
         # Set current page size
         self.set_current_page_size()
@@ -119,37 +159,43 @@ class ModificationForm(QWidget):
         
     def add_margin_settings_group(self):
         """Add margin settings group"""
-        group = QGroupBox("Margins")
+        group = QGroupBox("📐 Margins")
         layout = QFormLayout(group)
+        layout.setSpacing(8)
         
-        # Margin inputs
+        # Margin inputs (now supported for both DOCX and RTF)
         self.margin_top = QDoubleSpinBox()
         self.margin_top.setRange(0.1, 5.0)
         self.margin_top.setValue(1.0)
-        self.margin_top.setSuffix(" in")
+        self.margin_top.setSuffix(" inches")
         self.margin_top.setDecimals(2)
         layout.addRow("Top:", self.margin_top)
         
         self.margin_bottom = QDoubleSpinBox()
         self.margin_bottom.setRange(0.1, 5.0)
         self.margin_bottom.setValue(1.0)
-        self.margin_bottom.setSuffix(" in")
+        self.margin_bottom.setSuffix(" inches")
         self.margin_bottom.setDecimals(2)
         layout.addRow("Bottom:", self.margin_bottom)
         
         self.margin_left = QDoubleSpinBox()
         self.margin_left.setRange(0.1, 5.0)
         self.margin_left.setValue(1.0)
-        self.margin_left.setSuffix(" in")
+        self.margin_left.setSuffix(" inches")
         self.margin_left.setDecimals(2)
         layout.addRow("Left:", self.margin_left)
         
         self.margin_right = QDoubleSpinBox()
         self.margin_right.setRange(0.1, 5.0)
         self.margin_right.setValue(1.0)
-        self.margin_right.setSuffix(" in")
+        self.margin_right.setSuffix(" inches")
         self.margin_right.setDecimals(2)
         layout.addRow("Right:", self.margin_right)
+        
+        # Add unit info label
+        unit_info = QLabel("All margin measurements are in inches")
+        unit_info.setObjectName("measurementUnit")
+        layout.addRow("", unit_info)
         
         # Set current margins
         self.set_current_margins()
@@ -158,8 +204,9 @@ class ModificationForm(QWidget):
         
     def add_font_settings_group(self):
         """Add font settings group"""
-        group = QGroupBox("Font Settings")
+        group = QGroupBox("🔤 Font Settings")
         layout = QFormLayout(group)
+        layout.setSpacing(8)
         
         # Font family dropdown
         self.font_family_combo = QComboBox()
@@ -170,8 +217,13 @@ class ModificationForm(QWidget):
         self.font_size = QSpinBox()
         self.font_size.setRange(6, 72)
         self.font_size.setValue(12)
-        self.font_size.setSuffix(" pt")
+        self.font_size.setSuffix(" points")
         layout.addRow("Font Size:", self.font_size)
+        
+        # Add unit info label
+        unit_info = QLabel("Font size is measured in points (pt)")
+        unit_info.setObjectName("measurementUnit")
+        layout.addRow("", unit_info)
         
         # Set current font
         self.set_current_font()
@@ -180,8 +232,9 @@ class ModificationForm(QWidget):
         
     def add_line_spacing_group(self):
         """Add line spacing group"""
-        group = QGroupBox("Line Spacing")
+        group = QGroupBox("📏 Line Spacing")
         layout = QFormLayout(group)
+        layout.setSpacing(8)
         
         # Line spacing dropdown
         self.line_spacing_combo = QComboBox()
@@ -202,6 +255,11 @@ class ModificationForm(QWidget):
         self.custom_line_spacing.setDecimals(2)
         self.custom_line_spacing.hide()
         layout.addRow("Custom Value:", self.custom_line_spacing)
+        
+        # Add unit info label
+        unit_info = QLabel("Line spacing is a multiplier (1.0 = single, 1.5 = 1.5x, etc.)")
+        unit_info.setObjectName("measurementUnit")
+        layout.addRow("", unit_info)
         
         self.form_layout.addWidget(group)
         
@@ -278,20 +336,24 @@ class ModificationForm(QWidget):
     def on_page_size_changed(self, text: str):
         """Handle page size selection change"""
         if text == "Custom":
-            self.custom_width.show()
-            self.custom_height.show()
+            if hasattr(self, 'custom_width'):
+                self.custom_width.show()
+            if hasattr(self, 'custom_height'):
+                self.custom_height.show()
         else:
-            self.custom_width.hide()
-            self.custom_height.hide()
+            if hasattr(self, 'custom_width'):
+                self.custom_width.hide()
+            if hasattr(self, 'custom_height'):
+                self.custom_height.hide()
             
             # Set standard dimensions
-            if text == "A4":
+            if text == "A4" and hasattr(self, 'custom_width') and hasattr(self, 'custom_height'):
                 self.custom_width.setValue(8.27)
                 self.custom_height.setValue(11.69)
-            elif text == "Letter":
+            elif text == "Letter" and hasattr(self, 'custom_width') and hasattr(self, 'custom_height'):
                 self.custom_width.setValue(8.5)
                 self.custom_height.setValue(11.0)
-            elif text == "Legal":
+            elif text == "Legal" and hasattr(self, 'custom_width') and hasattr(self, 'custom_height'):
                 self.custom_width.setValue(8.5)
                 self.custom_height.setValue(14.0)
                 

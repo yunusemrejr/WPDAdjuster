@@ -78,7 +78,7 @@ class RtfProcessor:
             
     def apply_modifications(self, document_data: Dict[str, Any], settings: Dict[str, Any]) -> Path:
         """
-        Apply modification settings to RTF document
+        Apply modification settings to RTF document while preserving original formatting
         
         Args:
             document_data: Original document data
@@ -88,26 +88,46 @@ class RtfProcessor:
             Path to modified document
         """
         try:
-            # For RTF, we'll create a simple modified version
-            # In a production app, you'd want more sophisticated RTF manipulation
             rtf_content = document_data['rtf_content']
             
-            # Convert to plain text first
-            plain_text = rtf_to_text(rtf_content)
+            # For RTF, we'll be very conservative and only add minimal formatting
+            # RTF files are complex and we want to preserve all existing formatting
             
-            # Create a simple RTF header with basic formatting
-            font_family = settings.get('font_settings', {}).get('family', 'Arial')
-            font_size = settings.get('font_settings', {}).get('size', 12)
-            line_spacing = settings.get('line_spacing', 1.0)
+            # Start with original content - don't modify anything
+            modified_content = rtf_content
             
-            # Create modified RTF content
-            modified_content = f"""{{\\rtf1\\ansi\\deff0 {{\\fonttbl {{\\f0 {font_family};}}}}
-{{\\colortbl;\\red0\\green0\\blue0;}}
-\\f0\\fs{int(font_size * 2)}\\sl{int(line_spacing * 240)}\\slmult1
-{plain_text}
-}}"""
+            # Only add document-level formatting if absolutely necessary
+            # and only if the original document doesn't already have it
             
-            # Save modified document
+            # Check if we need to add any formatting
+            needs_modification = False
+            
+            # Check margins
+            if 'margins' in settings:
+                margins = settings['margins']
+                # Convert inches to twips (1 inch = 1440 twips)
+                if 'left' in margins and '\\margl' not in rtf_content:
+                    left_twips = int(margins['left'] * 1440)
+                    # Add left margin command
+                    modified_content = modified_content.replace('\\rtf1', f'\\rtf1\\margl{left_twips}')
+                    needs_modification = True
+                    
+                if 'right' in margins and '\\margr' not in rtf_content:
+                    right_twips = int(margins['right'] * 1440)
+                    modified_content = modified_content.replace('\\rtf1', f'\\rtf1\\margr{right_twips}')
+                    needs_modification = True
+                    
+                if 'top' in margins and '\\margt' not in rtf_content:
+                    top_twips = int(margins['top'] * 1440)
+                    modified_content = modified_content.replace('\\rtf1', f'\\rtf1\\margt{top_twips}')
+                    needs_modification = True
+                    
+                if 'bottom' in margins and '\\margb' not in rtf_content:
+                    bottom_twips = int(margins['bottom'] * 1440)
+                    modified_content = modified_content.replace('\\rtf1', f'\\rtf1\\margb{bottom_twips}')
+                    needs_modification = True
+            
+            # Save modified document (even if no changes were made)
             output_path = self._get_output_path(document_data['file_path'])
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(modified_content)
@@ -171,7 +191,8 @@ class RtfProcessor:
         """Count tables in RTF content"""
         return len(re.findall(r'\\trowd', content))
         
-    # Simplified RTF processing - striprtf handles most of the work
+    # Removed problematic methods that were adding zeros to document text
+    # New approach only adds formatting commands at document level
         
     def _get_output_path(self, original_path: str) -> Path:
         """Generate output path for modified document"""
