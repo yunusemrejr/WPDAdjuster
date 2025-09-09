@@ -71,14 +71,7 @@ The application follows a modular architecture:
 - `src/utils/`: Utility functions and helpers
 - `src/config/`: Configuration and settings
 
-## Development
-
-The project follows comprehensive development rules defined in `.cursor/rules/`:
-
-- Document processing specifications
-- GUI workflow guidelines
-- Styling and visual feedback standards
-- Technology stack requirements
+ 
 
 ## License
 
