@@ -1,0 +1,9 @@
+---
+description:Generate modification form based on extracted properties.
+
+If the document contains special elements (tables, footnotes, captions), display additional options dynamically.
+
+Avoid hard-coded form layouts—use rule-driven input creation.
+globs:
+alwaysApply: true
+---

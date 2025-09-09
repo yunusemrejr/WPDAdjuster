@@ -1,0 +1,13 @@
+---
+description:GUI: PyQt6
+
+DOCX Processing: python-docx
+
+RTF Processing: pyrtf-ng (extended if needed)
+
+Packaging: PyInstaller or AppImage
+
+Logging: Python standard logging
+globs:
+alwaysApply: true
+---

@@ -1,0 +1,9 @@
+---
+description:Use toast notifications for success/failure.
+
+Progress spinner for document loading.
+
+Subtle pulsing highlight for drag-drop state.
+globs:
+alwaysApply: true
+---

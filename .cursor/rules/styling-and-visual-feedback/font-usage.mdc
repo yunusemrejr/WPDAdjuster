@@ -1,0 +1,11 @@
+---
+description:Default UI font: system default (Sans on Linux).
+
+No custom fonts packaged.
+
+Scale text percentages according to display DPI.
+
+
+globs:
+alwaysApply: true
+---

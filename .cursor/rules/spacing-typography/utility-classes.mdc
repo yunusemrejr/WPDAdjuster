@@ -1,0 +1,7 @@
+---
+description:Maintain generic spacing utilities in CSS for GUI labels.
+
+Use consistent padding/margin scales in UI elements.
+globs:
+alwaysApply: true
+---

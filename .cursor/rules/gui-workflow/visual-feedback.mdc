@@ -1,0 +1,11 @@
+---
+description:Show animated highlighting when file is accepted.
+
+Display error badges when file is rejected.
+
+Provide simple, non-intrusive progress loaders when extracting properties.
+
+
+globs:
+alwaysApply: true
+---

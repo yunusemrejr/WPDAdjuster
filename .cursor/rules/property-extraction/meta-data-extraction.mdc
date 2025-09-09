@@ -1,0 +1,11 @@
+---
+description:Extract: document title, author (if available), page count, word count.
+
+Include page size (A4, Letter, etc.).
+
+Return results as JSON for consistency across modules.
+
+
+globs:
+alwaysApply: true
+---

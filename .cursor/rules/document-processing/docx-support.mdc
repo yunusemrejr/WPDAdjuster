@@ -1,0 +1,19 @@
+---
+description:Use a well-maintained Python library such as python-docx for reading and modifying DOCX files.
+
+Ensure full parsing of:
+
+Styles (Normal, Heading 1–6, Title, Caption)
+
+Tables and table cells
+
+Margins and page size
+
+Preserve original document structure and only overwrite defined properties.
+
+Handle embedded objects gracefully (ignore if cannot be modified).
+
+
+globs:
+alwaysApply: true
+---

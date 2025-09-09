@@ -6,22 +6,24 @@ def get_light_theme() -> str:
     """Get light theme stylesheet"""
     return """
     QMainWindow {
-        background-color: #f5f5f5;
+        background-color: #ffffff;
         color: #212121;
     }
     
     QWidget {
         font-family: system-ui, -apple-system, sans-serif;
         font-size: 12px;
+        color: #212121;
     }
     
     QPushButton {
         background-color: #1976d2;
         color: white;
         border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
     }
     
     QPushButton:hover {
@@ -38,32 +40,40 @@ def get_light_theme() -> str:
     }
     
     QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
-        border: 1px solid #bdbdbd;
-        border-radius: 4px;
-        padding: 6px 8px;
-        background-color: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 8px 12px;
+        background-color: #ffffff;
+        color: #212121;
+        font-size: 12px;
     }
     
     QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {
         border-color: #1976d2;
+        background-color: #f8f9ff;
     }
     
     QLabel {
         color: #424242;
+        font-weight: 500;
     }
     
     QGroupBox {
-        font-weight: 600;
-        border: 1px solid #bdbdbd;
-        border-radius: 4px;
-        margin-top: 8px;
-        padding-top: 8px;
+        font-weight: 700;
+        font-size: 13px;
+        color: #1976d2;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        background-color: #fafafa;
     }
     
     QGroupBox::title {
         subcontrol-origin: margin;
-        left: 8px;
-        padding: 0 4px 0 4px;
+        left: 12px;
+        padding: 0 8px 0 8px;
+        background-color: #fafafa;
     }
     
     QScrollArea {
@@ -72,15 +82,34 @@ def get_light_theme() -> str:
     }
     
     QProgressBar {
-        border: 1px solid #bdbdbd;
-        border-radius: 4px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
         text-align: center;
         background-color: #f5f5f5;
+        color: #212121;
     }
     
     QProgressBar::chunk {
         background-color: #1976d2;
-        border-radius: 3px;
+        border-radius: 4px;
+    }
+    
+    /* Document overview specific styles */
+    QLabel#documentInfo {
+        color: #1976d2;
+        font-weight: 600;
+        font-size: 13px;
+    }
+    
+    QLabel#documentValue {
+        color: #424242;
+        font-weight: 500;
+    }
+    
+    QLabel#measurementUnit {
+        color: #757575;
+        font-style: italic;
+        font-size: 11px;
     }
     """
 
@@ -88,22 +117,24 @@ def get_dark_theme() -> str:
     """Get dark theme stylesheet"""
     return """
     QMainWindow {
-        background-color: #212121;
-        color: #f5f5f5;
+        background-color: #1a1a1a;
+        color: #ffffff;
     }
     
     QWidget {
         font-family: system-ui, -apple-system, sans-serif;
         font-size: 12px;
+        color: #ffffff;
     }
     
     QPushButton {
         background-color: #1976d2;
         color: white;
         border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
     }
     
     QPushButton:hover {
@@ -120,33 +151,40 @@ def get_dark_theme() -> str:
     }
     
     QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
-        border: 1px solid #424242;
-        border-radius: 4px;
-        padding: 6px 8px;
-        background-color: #303030;
-        color: #f5f5f5;
+        border: 2px solid #424242;
+        border-radius: 6px;
+        padding: 8px 12px;
+        background-color: #2d2d2d;
+        color: #ffffff;
+        font-size: 12px;
     }
     
     QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {
         border-color: #1976d2;
+        background-color: #1a1f2e;
     }
     
     QLabel {
         color: #e0e0e0;
+        font-weight: 500;
     }
     
     QGroupBox {
-        font-weight: 600;
-        border: 1px solid #424242;
-        border-radius: 4px;
-        margin-top: 8px;
-        padding-top: 8px;
+        font-weight: 700;
+        font-size: 13px;
+        color: #64b5f6;
+        border: 2px solid #424242;
+        border-radius: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        background-color: #2d2d2d;
     }
     
     QGroupBox::title {
         subcontrol-origin: margin;
-        left: 8px;
-        padding: 0 4px 0 4px;
+        left: 12px;
+        padding: 0 8px 0 8px;
+        background-color: #2d2d2d;
     }
     
     QScrollArea {
@@ -155,15 +193,34 @@ def get_dark_theme() -> str:
     }
     
     QProgressBar {
-        border: 1px solid #424242;
-        border-radius: 4px;
+        border: 2px solid #424242;
+        border-radius: 6px;
         text-align: center;
-        background-color: #303030;
+        background-color: #2d2d2d;
+        color: #ffffff;
     }
     
     QProgressBar::chunk {
         background-color: #1976d2;
-        border-radius: 3px;
+        border-radius: 4px;
+    }
+    
+    /* Document overview specific styles */
+    QLabel#documentInfo {
+        color: #64b5f6;
+        font-weight: 600;
+        font-size: 13px;
+    }
+    
+    QLabel#documentValue {
+        color: #e0e0e0;
+        font-weight: 500;
+    }
+    
+    QLabel#measurementUnit {
+        color: #bdbdbd;
+        font-style: italic;
+        font-size: 11px;
     }
     """
 

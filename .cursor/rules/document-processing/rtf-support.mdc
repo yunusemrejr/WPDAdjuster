@@ -1,0 +1,11 @@
+---
+description:Use pyrtf-ng or similar modernized RTF library for parsing.
+
+Support basic text, font, size, line spacing, and table formatting.
+
+Ignore unsupported rich media while preserving text integrity.
+
+Export modified files back into RTF without breaking encoding.
+globs:
+alwaysApply: true
+---
