@@ -1,9 +1,0 @@
----
-description:If parsing fails, show modal with error description.
-
-Provide retry option to upload different file.
-
-Do not crash or freeze UI if errors occur.
-globs:
-alwaysApply: true
----

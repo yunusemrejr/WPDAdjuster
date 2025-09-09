@@ -1,9 +1,0 @@
----
-description:Always use relative project paths with Pathlib.
-
-Store temporary files under system temp directory.
-
-Never write to root or system directories.
-globs:
-alwaysApply: true
----

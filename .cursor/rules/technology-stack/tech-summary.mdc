@@ -1,9 +1,0 @@
----
-description:Entire app must remain offline-capable and not rely on external APIs.
-
-Written fully in Python for consistency.
-
-No deprecated or abandoned libraries permitted.
-globs:
-alwaysApply: true
----

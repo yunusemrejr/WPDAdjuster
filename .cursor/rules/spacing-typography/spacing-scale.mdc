@@ -1,7 +1,0 @@
----
-description:Line spacing options: 1.0, 1.15, 1.5, 2.0, custom %.
-
-Margins in cm with precision up to 0.1 cm.
-globs:
-alwaysApply: true
----

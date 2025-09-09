@@ -1,7 +1,0 @@
----
-description:Centralize all PyQt stylesheet definitions in one place.
-
-Define themes with named variables (primary, secondary, neutral).
-globs:
-alwaysApply: true
----

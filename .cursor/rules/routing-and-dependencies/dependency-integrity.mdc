@@ -1,9 +1,0 @@
----
-description:All dependencies must be pinned with versions in requirements.txt.
-
-Check for security advisories before updating.
-
-Avoid libraries that require system-wide compilation wherever possible.
-globs:
-alwaysApply: true
----

@@ -1,9 +1,0 @@
----
-description:APP_DEBUG – enables verbose logging.
-
-APP_THEME – overrides default theme (light, dark).
-
-APP_LANG – user language override.
-globs:
-alwaysApply: true
----

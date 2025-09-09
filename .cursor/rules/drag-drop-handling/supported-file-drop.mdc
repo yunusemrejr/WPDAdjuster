@@ -1,9 +1,0 @@
----
-description:Accept only .docx, .rtf.
-
-Block dragging directories or non-word files.
-
-Display a tooltip “Only DOCX and RTF are supported”.
-globs:
-alwaysApply: true
----
