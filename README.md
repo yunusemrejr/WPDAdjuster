@@ -82,7 +82,7 @@ The project follows comprehensive development rules defined in `.cursor/rules/`:
 
 ## License
 
-This project is developed for internal use. Please refer to the individual library licenses for dependencies.
+This project is developed for open-source use. Please refer to the individual library licenses for dependencies.
 
 ## Dependencies
 
